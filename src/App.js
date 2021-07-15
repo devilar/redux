@@ -1,13 +1,14 @@
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
-import {addCustomerAction, addManyCustomersAction, removeCustomerAction} from "./store/customerReducer";
+import {addCustomerAction, removeCustomerAction} from "./store/customerReducer";
 import {fetchCustomers} from "./asyncActions/customers";
+import {incrementCreator, decrementCreator, AsyncIncrementCreator, AsyncDecrementCreator} from "./store/countReducer";
 
 function App() {
 
   const dispatch = useDispatch()
-  const cash = useSelector(state=>state.cash.cash)
+  const count = useSelector(state=>state.cash.count)
   const customers = useSelector(state=>state.customers.customers)
 
   const [name,setName] = useState('test')
@@ -25,9 +26,9 @@ function App() {
 
   return (
     <div className="App">
-        <div>{cash}</div>
-      <button onClick={()=>dispatch({type:'GET_CASH',payload:1})}>get</button>
-      <button onClick={()=>dispatch({type:'ADD_CASH',payload:1})}>put</button>
+        <div>{count}</div>
+      <button onClick={()=>dispatch(AsyncDecrementCreator())}>get</button>
+      <button onClick={()=>dispatch((AsyncIncrementCreator()))}>put</button>
 
         <h2>Users</h2>
 
