@@ -1,6 +1,8 @@
 import './App.css';
 import {useDispatch, useSelector} from "react-redux";
 import {useState} from "react";
+import {addCustomerAction, addManyCustomersAction, removeCustomerAction} from "./store/customerReducer";
+import {fetchCustomers} from "./asyncActions/customers";
 
 function App() {
 
@@ -17,7 +19,7 @@ function App() {
           title:name,
           available:false
       }
-      dispatch({type:'ADD_CUSTOMER',payload:customer})
+      dispatch(addCustomerAction(customer))
 
   }
 
@@ -29,9 +31,10 @@ function App() {
 
         <h2>Users</h2>
 
-        {customers.length ? customers.map(customer=><div>{customer.title} <button onClick={()=>dispatch({type:'REMOVE_CUSTOMER',payload:customer.id})}>x</button></div>) : <div>No users</div>}
+        {customers.length ? customers.map(customer=><div>{customer.name} <button onClick={()=>dispatch(removeCustomerAction(customer.id))}>x</button></div>) : <div>No users</div>}
 
         <button onClick={()=>addCustomer(prompt())}>add customer</button>
+        <button onClick={()=>dispatch(fetchCustomers())}>add many customers</button>
     </div>
   );
 }
